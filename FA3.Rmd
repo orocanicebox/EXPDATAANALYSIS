@@ -1,0 +1,50 @@
+---
+title: "EDA FA 3"
+author: "Karl Isaiah Buenafe"
+date: "2025-02-28"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	message = TRUE,
+	warning = TRUE,
+	include = FALSE
+)
+library(ggplot2)
+library(tidyr)
+library(dcldata)
+
+data(diamonds)
+
+df = diamonds
+head(df)
+```
+
+
+# DATASET
+```{r dataset, echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+head(df,5)
+```
+## 1. Create a histogram on the diamonds dataset,
+
+```{r 1histo, echo=TRUE, message=FALSE, fig.retina=1}
+ggplot(df, aes(x = carat)) +
+  geom_histogram(color = "black", fill='deepskyblue4', bins=30) +
+  labs(
+    title = "Diamonds Histogram"
+   ) 
+```
+
+### Using layer function
+```{r 1layer, echo=TRUE}
+
+```
+
+
+
+
+
+
+
+
