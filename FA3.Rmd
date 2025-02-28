@@ -2,7 +2,9 @@
 title: "EDA FA 3"
 author: "Karl Isaiah Buenafe"
 date: "2025-02-28"
-output: pdf_document
+output:
+  md_document:
+    variant: markdown_github
 ---
 
 ```{r setup, include=FALSE}
@@ -35,12 +37,30 @@ ggplot(df, aes(x = carat)) +
     title = "Diamonds Histogram"
    ) 
 ```
+![Diamond Histogram](FA3_files/figure-markdown_github/1histo-1.png)
+
 
 ### Using layer function
-```{r 1layer, echo=TRUE}
+```{r 1layer}
+histogram_layer <- function(fill_color = "deepskyblue4", bins = 30) {
+  layer(
+    geom = "bar", 
+    stat = "bin",
+    mapping = NULL,
+    position = "stack",
+    params = list(
+      color = "black",
+      fill = fill_color,
+      bins = bins
+    )
+  )
+}
 
+ggplot(diamonds, aes(x = carat)) +
+  histogram_layer() +
+  labs(title = "Diamonds Histogram")
 ```
-
+![Diamond Histogram](FA3_files/figure-markdown_github/1layer-1.png)
 
 
 
