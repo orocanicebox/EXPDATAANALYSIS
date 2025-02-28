@@ -2,4 +2,5 @@
 
 ## 1. Create a histogram on the diamonds dataset,
 
-### Using layer function
+![Diamond Histogram](FA3_files/figure-markdown_github/1histo-1.png) \###
+Using layer function
