@@ -2,9 +2,7 @@
 title: "EDA FA 3"
 author: "Karl Isaiah Buenafe"
 date: "2025-02-28"
-output:
-  md_document:
-    variant: markdown_github
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -40,7 +38,9 @@ ggplot(df, aes(x = carat)) +
 ![Diamond Histogram](FA3_files/figure-markdown_github/1histo-1.png)
 
 
-### Using layer function
+
+
+
 ```{r 1layer}
 histogram_layer <- function(fill_color = "deepskyblue4", bins = 30) {
   layer(
@@ -60,11 +60,45 @@ ggplot(diamonds, aes(x = carat)) +
   histogram_layer() +
   labs(title = "Diamonds Histogram")
 ```
-![Diamond Histogram](FA3_files/figure-markdown_github/1layer-1.png)
+![Histogram using Layer function](FA3_files/figure-markdown_github/1layer-1.png)
+
+## 2. Remember that a histogram is a plot with stat_bin and geom_bar. Modify your histogram code so that it uses a different geom, for example geom_line or geom_point. This should be simple once you have the layer specification of a histogram.
+
+```{r 2layer, echo=TRUE}
+histogram_layer <- function(fill_color = "deepskyblue4", bins = 100) {
+  layer(
+    geom = "density", 
+    stat = "bin",
+    mapping = NULL,
+    position = "stack",
+    params = list(
+      color = "black",
+      fill = fill_color,
+      bins = bins
+    )
+  )
+}
+
+ggplot(diamonds, aes(x = carat)) +
+  histogram_layer() +
+  labs(title = "Diamonds Density")
+```
+![geom_density](FA3_files/figure-markdown_github/2layer-1.png)
+
+## 3. In your histogram (the one plotted with bars that you created in question 1), add an aesthetic mapping from one of the factor variables (maybe color or clarity) to the fill or color aesthetic.
+```{r aes, echo=FALSE}
+ggplot(diamonds, aes(x = carat, fill = clarity)) +
+  geom_histogram(bins=40, fill_color = 'clarity', color = 'black') +
+  labs(title = "Modified Aesthetic Histogram")
+```
+![Aes=clarity](FA3_files/figure-markdown_github/aes-1.png)
 
 
-
-
-
-
-
+## 4. What is the default position adjustment for a histogram? Try changing the position adjustment in the histogram you created in question 3 to something different (hint: try dodge). 
+```{r dodge, echo=FALSE}
+ggplot(diamonds, aes(x = carat, fill = clarity)) +
+  geom_histogram(bins=20, color = "black", line = 0.1, position = 'dodge') +
+  labs(title = " Dodged Diamond Histogram") +
+  theme_minimal()
+```
+![position=dodge](FA3_files/figure-markdown_github/dodge-1.png)

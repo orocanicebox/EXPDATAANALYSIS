@@ -1,0 +1,96 @@
+---
+title: "EDA FA4 BUENAFE"
+author: "Karl Isaiah Buenafe"
+date: "2025-03-02"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(ggplot2)
+```
+
+### MORTALITY BY LATITUDE DATASET
+```{r dataset, echo=FALSE}
+df = read.csv("~/Documents/EXPDATA/mortality_by_latitude.csv")
+
+head(df,10)
+```
+Make a plot of mortality index against mean average temperature
+
+```{r plot, echo=FALSE}
+index = df$mortality_index
+temp = df$temperature
+
+ggplot(df, aes(y = index, x = temp)) + 
+  geom_point(color = "deepskyblue4", line = 1) + 
+  labs(title = "Plot of Mortality Index", y = "Mortalirty Index", x = "Temperature")
+
+
+```
+
+Using Log Transformation to straighten the plot:
+
+#### log(index)
+```{r login}
+plot(log(index), temp)
+```
+#### log(temp)
+```{r logtem}
+plot(index, log(temp) )
+```
+
+### Considering log(index) as the best transformation:
+
+#### Fitting log(index) and plotting the residuals respectively
+```{r fit}
+model <- lm(log(index) ~ temp, data = df)
+
+plot(fitted(model), resid(model))
+abline(h=0, col="red")
+
+qqnorm(resid(model))
+qqline(resid(model), col="red")
+```
+
+```{r diamond, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = TRUE,
+	warning = TRUE
+)
+
+df2 = diamonds
+head(df2)
+```
+
+
+# DIAMOND DATASET
+```{r dataset2, echo=TRUE, message=TRUE, warning=TRUE, paged.print=TRUE}
+head(df2,8)
+```
+
+### LOESS SMOOTHER
+```{r loessPrice}
+df2$price <- 1:nrow(df2) 
+df2 <- df2[1:100, ]
+loessMod25 <- loess(carat ~ price, data=df2, span=0.25) 
+loessMod50 <- loess(carat ~ price, data=df2, span=0.50) 
+loessMod75 <- loess(carat ~ price, data=df2, span=0.75) 
+```
+
+span values: 0.25, 0.50, and 0.75
+
+#### Plotting
+```{r plotting}
+smoothed25 <- predict(loessMod25) 
+smoothed50 <- predict(loessMod50) 
+smoothed75 <- predict(loessMod75) 
+
+plot(df2$carat, x=df2$price, type="l", main="Loess Smoothing and Prediction", xlab="Price", ylab="Carat")
+lines(smoothed25, x=df2$price, col="red")
+lines(smoothed50, x=df2$price, col="green")
+lines(smoothed75, x=df2$price, col="blue")
+```
+
