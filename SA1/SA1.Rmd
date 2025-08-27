@@ -1,0 +1,43 @@
+---
+title: "SUMMATIVE ASSESSMENT 1"
+author: "Karl Isaiah Buenafe"
+date: "2025-03-12"
+output: pdf_document
+---
+## DATASET
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = TRUE,
+	warning = TRUE
+)
+library(ggplot2)
+library(tidyr)
+```
+
+```{r DATASET}
+df = read.csv("~/Downloads/EDA_Ecommerce_Assessment.csv")
+head(df,3)
+```
+
+### SUMMARY
+```{r summary}
+df_summary=summary(df)
+head(df_summary)
+```
+
+```{r plot, echo=FALSE}
+ggplot(df, aes(x = Purchase_Amount)) + 
+  geom_histogram(color = "black", bins = 100, fill="deepskyblue4") + 
+  labs(title = "Purchase Amount Distribution", y = "Frequency", x = "Purchase Amount")
+
+ggplot(df, aes(x = Purchase_Amount)) + 
+  geom_boxplot(color = "black", bins = 100, fill="deepskyblue4") + 
+  labs(title = "Purchase Amount Distribution", y = "Frequency", x = "Purchase Amount")
+```
+
+
+
+
+
+
